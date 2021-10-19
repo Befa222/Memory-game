@@ -16,33 +16,40 @@ import poke12 from './images/94.png'
 
 function App() {
 
-  
-const images = [poke1, poke2, poke3, poke4, poke5, poke6, poke7, poke8, poke9, poke10, poke11, poke12,poke1, poke2, poke3, poke4, poke5, poke6, poke7, poke8, poke9, poke10, poke11, poke12]
+  const [startGame, setStartGame] = useState(true)
 
-const [randomImage, setRandomImages] = useState()
+  const images = [poke1, poke2, poke3, poke4, poke5, poke6, poke7, poke8, poke9, poke10, poke11, poke12, poke1, poke2, poke3, poke4, poke5, poke6, poke7, poke8, poke9, poke10, poke11, poke12]
 
-const randomize = () => {
-setRandomImages(images.sort(() => Math.random() - 0.5).map(e=>e))
-}
+  const [randomImages, setRandomImages] = useState()
+
+
+  const shuffle = () => {
+    const test = images.sort(() => Math.random() - 0.5)
+    setRandomImages(test)
+  }
+
 
   return (
     <div>
+      {startGame &&
+      <button onClick={()=> {shuffle(); setStartGame(!startGame)}}>start</button>
+      }
       <section>
-      {images.sort(() => Math.random() - 0.5).map(e=>
-      <div className="flip-card">
-        <div className="flip-card-inner">
-          <div className="flip-card-front">
-          </div>
-          <div className="flip-card-back">
+        {randomImages &&
+          randomImages.map(e =>
+            <div className="flip-card">
+              <div className="flip-card-inner">
+                <div className="flip-card-front">
+                </div>
+                <div className="flip-card-back">
 
-            <img className='cardImage' src={e} alt='pokemon'/>
-          </div>
-        </div>
-      </div>
-      )}
-     </section>
-     <button>test</button>
-     
+                  <img className='cardImage' src={e} alt='pokemon' />
+                </div>
+              </div>
+            </div>
+          )}
+      </section>
+          <button onClick={()=>shuffle()}>again</button>
     </div>
   );
 }
