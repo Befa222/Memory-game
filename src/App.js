@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import Stopwatch from './components/Stopwatch';
 import poke1 from './images/4.png'
 import poke2 from './images/5.png'
 import poke3 from './images/23.png'
@@ -90,6 +91,7 @@ function App() {
       }
     } 
   }
+  
 
   return (
     <div className='game'>
@@ -120,7 +122,7 @@ function App() {
           )}
       </section>
       <div className='bottom-container'>
-          <h1>Time: 00.00</h1>
+          <h1><Stopwatch/></h1>
           <h2>Best Time: 00.00</h2>
       </div>
     </div>
