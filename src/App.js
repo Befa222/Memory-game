@@ -17,39 +17,112 @@ import poke12 from './images/94.png'
 function App() {
 
   const [startGame, setStartGame] = useState(true)
-
-  const images = [poke1, poke2, poke3, poke4, poke5, poke6, poke7, poke8, poke9, poke10, poke11, poke12, poke1, poke2, poke3, poke4, poke5, poke6, poke7, poke8, poke9, poke10, poke11, poke12]
-
   const [randomImages, setRandomImages] = useState()
+  const [restartGame, setRestartGame] = useState(false)
 
+  const images = () => [
+    { src: poke1, nb: 1 },
+    { src: poke2, nb: 2 },
+    { src: poke3, nb: 3 },
+    { src: poke4, nb: 4 },
+    { src: poke5, nb: 5 },
+    { src: poke6, nb: 6 },
+    { src: poke7, nb: 7 },
+    { src: poke8, nb: 8 },
+    { src: poke9, nb: 9 },
+    { src: poke10, nb: 10 },
+    { src: poke11, nb: 11 },
+    { src: poke12, nb: 12 },
+    { src: poke1, nb: 1 },
+    { src: poke2, nb: 2 },
+    { src: poke3, nb: 3 },
+    { src: poke4, nb: 4 },
+    { src: poke5, nb: 5 },
+    { src: poke6, nb: 6 },
+    { src: poke7, nb: 7 },
+    { src: poke8, nb: 8 },
+    { src: poke9, nb: 9 },
+    { src: poke10, nb: 10 },
+    { src: poke11, nb: 11 },
+    { src: poke12, nb: 12 },
+
+  ]
 
   const shuffle = () => {
-    const test = images.sort(() => Math.random() - 0.5)
-    setRandomImages(test)
+    const random = images()
+    random.sort(() => Math.random() - 0.5)
+    setRandomImages(random)
   }
 
+  const flipCard = (event) => {
+    const element = event.currentTarget;
+    element.classList.toggle('flip');
+  }
+
+  const matchingCard = (e) => {
+    const clickedCard = e.currentTarget
+    const rotateBack = document.querySelectorAll('.flip-card-inner, .flip')
+    clickedCard.classList.add('flipped')
+    const flippedCard = document.querySelectorAll('.flipped')
+  
+    if (flippedCard.length === 2) {
+
+      if (flippedCard[0].getAttribute('number') === flippedCard[1].getAttribute('number')) {
+
+        flippedCard.forEach(e => {
+          e.classList.remove('flipped')
+          e.classList.toggle('makeInvisible')
+        })
+        const test = document.querySelectorAll('.makeInvisible')
+        if (test.length === 24) {
+          setRestartGame(!restartGame)
+        }
+     }
+       
+      else {
+
+        flippedCard.forEach(e => {
+          e.classList.remove('flipped')
+        })
+        rotateBack.forEach(e => {
+          setTimeout(() => e.classList.remove('flip'), 600)
+        })
+      }
+    } 
+  }
 
   return (
-    <div>
+    <div className='game'>
       {startGame &&
-      <button onClick={()=> {shuffle(); setStartGame(!startGame)}}>start</button>
+      <div className='start-screen'>
+        <h1 className='start-title'>Press</h1>
+        <button className='start-button' onClick={() => { shuffle(); setStartGame(!startGame) }}>Start</button>
+      </div>
+      }
+      { restartGame &&
+      <div className='restart-screen'>
+          <h1 className='restart-title'>Press</h1>
+        <button className='restart-button' onClick={() => document.location.reload()}>Restart</button>
+      </div>
       }
       <section>
         {randomImages &&
-          randomImages.map(e =>
-            <div className="flip-card">
-              <div className="flip-card-inner">
-                <div className="flip-card-front">
+          randomImages.map((e, index) =>
+            <div className="flip-card" key={index} >
+              <div onClick={flipCard} className="flip-card-inner" >
+                <div onClick={matchingCard} className="flip-card-front" number={e.nb}>
                 </div>
-                <div className="flip-card-back">
-
-                  <img className='cardImage' src={e} alt='pokemon' />
+                <div className="flip-card-back" >
+                  <img className='cardImage' src={e.src} alt='pokemon' />
                 </div>
               </div>
             </div>
           )}
       </section>
-          <button onClick={()=>shuffle()}>again</button>
+      <div className='bottom-container'>
+          <h1>Time: 00.00</h1>
+          <h2>Best Time: 00.00</h2>
+      </div>
     </div>
   );
 }
