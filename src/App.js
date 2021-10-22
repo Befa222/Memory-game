@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import './App.css';
-import Stopwatch from './components/Stopwatch';
 import poke1 from './images/4.png'
 import poke2 from './images/5.png'
 import poke3 from './images/23.png'
@@ -20,6 +19,11 @@ function App() {
   const [startGame, setStartGame] = useState(true)
   const [randomImages, setRandomImages] = useState()
   const [restartGame, setRestartGame] = useState(false)
+
+  const [timer, setTimer] = useState(0)
+  const [isActive, setIsActive] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
+  const countRef = useRef(null)
 
   const images = () => [
     { src: poke1, nb: 1 },
@@ -65,7 +69,7 @@ function App() {
     const rotateBack = document.querySelectorAll('.flip-card-inner, .flip')
     clickedCard.classList.add('flipped')
     const flippedCard = document.querySelectorAll('.flipped')
-  
+
     if (flippedCard.length === 2) {
 
       if (flippedCard[0].getAttribute('number') === flippedCard[1].getAttribute('number')) {
@@ -76,10 +80,11 @@ function App() {
         })
         const test = document.querySelectorAll('.makeInvisible')
         if (test.length === 24) {
+          handlePause(true)
           setRestartGame(!restartGame)
         }
-     }
-       
+      }
+
       else {
 
         flippedCard.forEach(e => {
@@ -89,23 +94,50 @@ function App() {
           setTimeout(() => e.classList.remove('flip'), 600)
         })
       }
-    } 
+    }
   }
+  
+
+    const handleStart = () => {
+      setIsActive(true)
+      countRef.current = setInterval(() => {
+        setTimer((timer) => timer + 1)
+      }, 1000)
+    }
+    const handlePause = () => {
+      clearInterval(countRef.current)
+      setIsPaused(false)
+    }
+    const handleReset = () => {
+      clearInterval(countRef.current)
+      setIsActive(false)
+      setTimer(0)
+    }
+  
+    const formatTime = () => {
+      const getSeconds = `0${(timer % 60)}`.slice(-2)
+      const minutes = `${Math.floor(timer / 60)}`
+      const getMinutes = `0${minutes % 60}`.slice(-2)
+  
+      return `${getMinutes} : ${getSeconds}`
+    }
   
 
   return (
     <div className='game'>
       {startGame &&
-      <div className='start-screen'>
-        <h1 className='start-title'>Press</h1>
-        <button className='start-button' onClick={() => { shuffle(); setStartGame(!startGame) }}>Start</button>
-      </div>
+        <div className='start-screen'>
+          <p className='game-rules'>Find the matching pairs as fast as you can!</p>
+          <h1 className='start-title'>Press</h1>
+          <span onClick={()=>handleStart()}><button className='start-button' onClick={() => { shuffle(); setStartGame(!startGame) }}>Start</button></span>
+        </div>
       }
-      { restartGame &&
-      <div className='restart-screen'>
+      {restartGame &&
+        <div className='restart-screen'>
+          <h1>Well done!</h1>
           <h1 className='restart-title'>Press</h1>
-        <button className='restart-button' onClick={() => document.location.reload()}>Restart</button>
-      </div>
+          <button className='restart-button' onClick={() => document.location.reload()}>Restart</button>
+        </div>
       }
       <section>
         {randomImages &&
@@ -122,8 +154,8 @@ function App() {
           )}
       </section>
       <div className='bottom-container'>
-          <h1><Stopwatch/></h1>
-          <h2>Best Time: 00.00</h2>
+        <h1>Time: {formatTime()}</h1>
+        <h2>Best Time: 00.00</h2>
       </div>
     </div>
   );
