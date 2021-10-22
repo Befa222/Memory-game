@@ -99,20 +99,20 @@ function App() {
   
 
     const handleStart = () => {
-      setIsActive(true)
+      setIsActive(!isActive)
       countRef.current = setInterval(() => {
         setTimer((timer) => timer + 1)
       }, 1000)
     }
     const handlePause = () => {
       clearInterval(countRef.current)
-      setIsPaused(false)
+      setIsPaused(!isPaused)
     }
-    const handleReset = () => {
-      clearInterval(countRef.current)
-      setIsActive(false)
-      setTimer(0)
-    }
+    // const handleReset = () => {
+    //   clearInterval(countRef.current)
+    //   setIsActive(false)
+    //   setTimer(0)
+    // }
   
     const formatTime = () => {
       const getSeconds = `0${(timer % 60)}`.slice(-2)
