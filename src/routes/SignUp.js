@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext'
 export default function SignUp() {
 
     const emailRef = useRef()
-    const nameRef = useRef()
+    
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
     const { signup } = useAuth()

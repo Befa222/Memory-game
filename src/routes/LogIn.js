@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext'
 export default function Login() {
 
     const emailRef = useRef()
-    const nameRef = useRef()
+
     const passwordRef = useRef()
 
     const { login } = useAuth()
@@ -37,8 +37,6 @@ export default function Login() {
                 <input className='user-email' type="email" ref={emailRef} required placeholder='Your email' />
 
                 <input className='user-password' type='password' ref={passwordRef} required placeholder='Password' />
-
-               
 
                 <input className="create-profile" type="submit" disabled={loading} value="Log in" />
             </form>

@@ -1,6 +1,9 @@
 import { useState, useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
+import { storage } from '../firebase';
+import { ref } from '@firebase/storage';
+
 import '../App.css';
 import poke1 from '../images/4.png'
 import poke2 from '../images/5.png'
@@ -26,8 +29,15 @@ function Game() {
     const [isPaused, setIsPaused] = useState(false)
     const countRef = useRef(null)
     const [error, setError] = useState('')
-    const {currentUser, logout} = useAuth()
+    const { currentUser, logout } = useAuth()
     const history = useHistory()
+
+    const [bestTime, setBestTime] = useState()
+
+    //const timeRef = ref(storage, bestTime)
+
+
+
 
     const images = () => [
         { src: poke1, nb: 1 },
@@ -85,7 +95,10 @@ function Game() {
                 const test = document.querySelectorAll('.makeInvisible')
                 if (test.length === 24) {
                     handlePause(true)
+                    setBestTime(timer)
                     setRestartGame(!restartGame)
+                  
+
                 }
             }
 
@@ -126,13 +139,13 @@ function Game() {
         return `${getMinutes} : ${getSeconds}`
     }
 
-    async function handleLogout(){
+    async function handleLogout() {
         setError('')
 
-        try{
+        try {
             await logout()
             history.push('/LogIn')
-        }   catch {
+        } catch {
             setError('Failed to log out')
         }
     }
@@ -169,7 +182,7 @@ function Game() {
             </section>
             <div className='bottom-container'>
                 <h1>Time: {formatTime()}</h1>
-                <h2>Best Time: 00.00</h2>
+                <h2>Best Time:{bestTime}</h2>
                 <h3>{currentUser.email}{error}</h3>
                 <button onClick={handleLogout}>Log out</button>
             </div>
