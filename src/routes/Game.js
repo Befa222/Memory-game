@@ -1,4 +1,6 @@
 import { useState, useRef } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { useHistory } from 'react-router-dom';
 import '../App.css';
 import poke1 from '../images/4.png'
 import poke2 from '../images/5.png'
@@ -13,6 +15,7 @@ import poke10 from '../images/65.png'
 import poke11 from '../images/93.png'
 import poke12 from '../images/94.png'
 
+
 function Game() {
     const [startGame, setStartGame] = useState(true)
     const [randomImages, setRandomImages] = useState()
@@ -22,6 +25,9 @@ function Game() {
     const [isActive, setIsActive] = useState(false)
     const [isPaused, setIsPaused] = useState(false)
     const countRef = useRef(null)
+    const [error, setError] = useState('')
+    const {currentUser, logout} = useAuth()
+    const history = useHistory()
 
     const images = () => [
         { src: poke1, nb: 1 },
@@ -120,6 +126,16 @@ function Game() {
         return `${getMinutes} : ${getSeconds}`
     }
 
+    async function handleLogout(){
+        setError('')
+
+        try{
+            await logout()
+            history.push('/LogIn')
+        }   catch {
+            setError('Failed to log out')
+        }
+    }
 
     return (
         <div className='game'>
@@ -154,6 +170,8 @@ function Game() {
             <div className='bottom-container'>
                 <h1>Time: {formatTime()}</h1>
                 <h2>Best Time: 00.00</h2>
+                <h3>{currentUser.email}{error}</h3>
+                <button onClick={handleLogout}>Log out</button>
             </div>
         </div>
     );
