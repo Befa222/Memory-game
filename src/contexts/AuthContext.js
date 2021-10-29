@@ -1,8 +1,6 @@
 import React, {useContext, useState, useEffect} from 'react'
 import { auth } from '../firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, onAuthStateChanged } from '@firebase/auth'
-import {ref, set} from "firebase/database";
-import {database} from '../firebase'
 
 
 const AuthContext = React.createContext()
@@ -17,14 +15,10 @@ export function AuthPovider({children}) {
     const [currentUser, setCurrentUser] = useState()
     const [loading, setLoading] = useState(true)
 
-    const [error, setError] = useState('')
-
     const [bestTime, setBestTime] = useState()
 
-    
 
-
-    function signup(email, password) {
+    async function signup(email, password) {
         
     return createUserWithEmailAndPassword(auth, email, password)
         }
@@ -46,20 +40,19 @@ export function AuthPovider({children}) {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
         setLoading(false)
         setCurrentUser(user)
-        console.log(currentUser)
         })
          unsubscribe()
     }, [])
     
-    const writeUserData =()=> {
-        const db = database;
-        set(ref(db, 'users/' + currentUser.uid), {
-         email : currentUser.email,
-        });
-        set(ref(db, 'users/' + currentUser.uid + '/bestTime'), {
-           time: 0
-         })
-      }
+    // const writeUserData =()=> {
+    //     const db = database;
+    //     set(ref(db, 'users/' + currentUser.uid), {
+    //      email : currentUser.email,
+    //     });
+    //     set(ref(db, 'users/' + currentUser.uid + '/bestTime'), {
+    //        time: 0
+    //      })
+    //   }
 
 
 

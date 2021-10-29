@@ -33,7 +33,7 @@ export default function Login() {
             <h2>{error}</h2>
 
             <form onSubmit={handleSubmit}>
-               
+        
                 <input className='user-email' type="email" ref={emailRef} required placeholder='Your email' />
 
                 <input className='user-password' type='password' ref={passwordRef} required placeholder='Password' />

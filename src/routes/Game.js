@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
 import '../App.css';
@@ -14,9 +14,6 @@ import poke9 from '../images/63.png'
 import poke10 from '../images/65.png'
 import poke11 from '../images/93.png'
 import poke12 from '../images/94.png'
-import {ref, set, onValue, update} from "firebase/database";
-import {database} from '../firebase'
-
 
 function Game() {
 
@@ -29,7 +26,7 @@ function Game() {
     const [isPaused, setIsPaused] = useState(false)
     const countRef = useRef(null)
     const [error, setError] = useState('')
-    const { currentUser, logout, writeUserData, create, bestTime, setBestTime} = useAuth()
+    const { currentUser, logout, bestTime, setBestTime} = useAuth()
     const history = useHistory()
 
     
@@ -46,13 +43,13 @@ function Game() {
     //    })
     //  }
 
-    const writeUserTime =(e)=> {
-        e.preventDefault()
-        const db = database;
-        set(ref(db, 'users/' + currentUser.uid + '/bestTime'), {
-           time: bestTime
-         })
-      }
+    // const writeUserTime =(e)=> {
+    //     e.preventDefault()
+    //     const db = database;
+    //     set(ref(db, 'users/' + currentUser.uid + '/bestTime'), {
+    //        time: bestTime
+    //      })
+    //   }
 
 
     const images = () => [
