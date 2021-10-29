@@ -19,7 +19,6 @@ export function AuthPovider({children}) {
 
 
     async function signup(email, password) {
-        
     return createUserWithEmailAndPassword(auth, email, password)
         }
 
@@ -40,8 +39,10 @@ export function AuthPovider({children}) {
       const unsubscribe = onAuthStateChanged(auth, (user) => {
         setLoading(false)
         setCurrentUser(user)
+        console.log(auth.currentUser)
         })
          unsubscribe()
+         
     }, [])
     
     // const writeUserData =()=> {

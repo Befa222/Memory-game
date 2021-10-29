@@ -11,14 +11,12 @@ function App() {
  return (
   <AuthPovider>
       <Router>
-      
           <Switch>
             <Route path='/' exact component={SignUp}/>
             <Route path='/LogIn' component={LogIn}/>
             <PrivateRoute path='/Game' component={Game}/>
             <Route path='/Forgot-password' component={ForgotPassword}/>
           </Switch>
-          
         </Router>
         </AuthPovider>
     
