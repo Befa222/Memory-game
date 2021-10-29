@@ -8,7 +8,7 @@ export default function SignUp() {
     
     const passwordRef = useRef()
     const passwordConfirmRef = useRef()
-    const { signup } = useAuth()
+    const { signup} = useAuth()
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const history = useHistory()
@@ -25,13 +25,15 @@ export default function SignUp() {
             setLoading(true)
             await signup(emailRef.current.value, passwordRef.current.value)
             history.push('/Game')
-        } catch {
+        } 
+      
+        catch {
             setError('failed to create account')
         }
 
-        setLoading(false)
+        //setLoading(false)
     }
-
+   
     return (
         <div>
             <h2>{error}</h2>
@@ -45,7 +47,7 @@ export default function SignUp() {
 
                 <input className='password-confirmation' type='password' ref={passwordConfirmRef} required placeholder='confirm password' />
 
-                <input className="create-profile" type="submit" disabled={loading} value="Create profile" />
+            <button className="create-profile" type="submit" disabled={loading}>Create profile</button>
             </form>
             <h2>Already have an account?<Link to='/LogIn'>LogIn</Link></h2>
         </div>

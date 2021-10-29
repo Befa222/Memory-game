@@ -25,7 +25,7 @@ export default function ForgotPassword() {
             setError('failed to reset password')
         }
 
-        setLoading(false)
+        //setLoading(false)
     }
 
     return (

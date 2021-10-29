@@ -7,19 +7,21 @@ import { AuthPovider } from './contexts/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import ForgotPassword from './routes/ForgotPassword';
 
-
 function App() {
  return (
-    <AuthPovider>
+  <AuthPovider>
       <Router>
+      
           <Switch>
             <Route path='/' exact component={SignUp}/>
             <Route path='/LogIn' component={LogIn}/>
             <PrivateRoute path='/Game' component={Game}/>
             <Route path='/Forgot-password' component={ForgotPassword}/>
           </Switch>
+          
         </Router>
-    </AuthPovider>
+        </AuthPovider>
+    
 
  )
 }

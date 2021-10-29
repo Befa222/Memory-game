@@ -1,9 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
-import { storage } from '../firebase';
-import { ref } from '@firebase/storage';
-
 import '../App.css';
 import poke1 from '../images/4.png'
 import poke2 from '../images/5.png'
@@ -17,9 +14,12 @@ import poke9 from '../images/63.png'
 import poke10 from '../images/65.png'
 import poke11 from '../images/93.png'
 import poke12 from '../images/94.png'
+import {ref, set, onValue, update} from "firebase/database";
+import {database} from '../firebase'
 
 
 function Game() {
+
     const [startGame, setStartGame] = useState(true)
     const [randomImages, setRandomImages] = useState()
     const [restartGame, setRestartGame] = useState(false)
@@ -29,14 +29,30 @@ function Game() {
     const [isPaused, setIsPaused] = useState(false)
     const countRef = useRef(null)
     const [error, setError] = useState('')
-    const { currentUser, logout } = useAuth()
+    const { currentUser, logout, writeUserData, create, bestTime, setBestTime} = useAuth()
     const history = useHistory()
 
-    const [bestTime, setBestTime] = useState()
+    
+  
+   
 
-    //const timeRef = ref(storage, bestTime)
+    // const showBestTime = ()=>{
+    //     const db = database;
+    //    const saveBestTime = ref(db, 'users/' + currentUser.uid + '/bestTime' + '/time')
+    //    onValue(saveBestTime, (snapshot)=>{
+    //        const data = snapshot.val();
+    //        console.log(data)
+    //        console.log(bestTime)
+    //    })
+    //  }
 
-
+    const writeUserTime =(e)=> {
+        e.preventDefault()
+        const db = database;
+        set(ref(db, 'users/' + currentUser.uid + '/bestTime'), {
+           time: bestTime
+         })
+      }
 
 
     const images = () => [
@@ -78,6 +94,8 @@ function Game() {
         element.classList.toggle('flip');
     }
 
+    
+
     const matchingCard = (e) => {
         const clickedCard = e.currentTarget
         const rotateBack = document.querySelectorAll('.flip-card-inner, .flip')
@@ -92,14 +110,18 @@ function Game() {
                     e.classList.remove('flipped')
                     e.classList.toggle('makeInvisible')
                 })
-                const test = document.querySelectorAll('.makeInvisible')
-                if (test.length === 24) {
+                const cardSet = document.querySelectorAll('.makeInvisible')
+                if (cardSet.length === 24) {
                     handlePause(true)
-                    setBestTime(timer)
                     setRestartGame(!restartGame)
-                  
-
-                }
+                    setBestTime(timer)
+                    
+                    if (timer < bestTime) {
+                        setBestTime(timer)
+                        
+                    }
+                    
+                  }
             }
 
             else {
@@ -150,9 +172,13 @@ function Game() {
         }
     }
 
+
+
     return (
+        
         <div className='game'>
-            {startGame &&
+           
+             {startGame &&
                 <div className='start-screen'>
                     <p className='game-rules'>Find the matching pairs as fast as you can!</p>
                     <h1 className='start-title'>Press</h1>
@@ -182,11 +208,13 @@ function Game() {
             </section>
             <div className='bottom-container'>
                 <h1>Time: {formatTime()}</h1>
-                <h2>Best Time:{bestTime}</h2>
+                <h2>Best Time: {bestTime}s</h2>
                 <h3>{currentUser.email}{error}</h3>
                 <button onClick={handleLogout}>Log out</button>
+          
+                
             </div>
         </div>
-    );
+                );
 }
 export default Game;

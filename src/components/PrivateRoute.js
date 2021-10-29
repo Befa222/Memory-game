@@ -13,7 +13,6 @@ const {currentUser} = useAuth()
        render={props => {
     return currentUser ? <Component {...props} /> : <Redirect to='/LogIn'/>
     }}>
-
     </Route>
     )
 }
