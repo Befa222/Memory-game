@@ -30,7 +30,16 @@ function Game() {
     const history = useHistory()
 
     
-  
+    // const writeUserData =()=> {
+    //     const db = database;
+    //     set(ref(db, 'users/' + currentUser.uid), {
+    //      email : currentUser.email,
+    //     });
+    //     set(ref(db, 'users/' + currentUser.uid + '/bestTime'), {
+    //        time: 0
+    //      })
+    //   }
+
    
 
     // const showBestTime = ()=>{
