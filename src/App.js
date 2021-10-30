@@ -6,6 +6,7 @@ import SignUp from './routes/SignUp'
 import { AuthProvider } from './contexts/AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import ForgotPassword from './routes/ForgotPassword';
+import Leaderboard from './routes/Leaderboard';
 
 function App() {
  return (
@@ -16,6 +17,7 @@ function App() {
             <Route path='/LogIn' component={LogIn}/>
             <PrivateRoute path='/Game' component={Game}/>
             <Route path='/Forgot-password' component={ForgotPassword}/>
+            <Route path='/Leaderboard' component={Leaderboard}/>
           </Switch>
         </Router>
      

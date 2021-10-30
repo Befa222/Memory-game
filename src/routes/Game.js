@@ -1,6 +1,8 @@
 import { useState, useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useHistory } from 'react-router-dom';
+import { database } from '../firebase';
+import { ref, set, child, get } from '@firebase/database';
 import '../App.css';
 import poke1 from '../images/4.png'
 import poke2 from '../images/5.png'
@@ -20,45 +22,15 @@ function Game() {
     const [startGame, setStartGame] = useState(true)
     const [randomImages, setRandomImages] = useState()
     const [restartGame, setRestartGame] = useState(false)
-
     const [timer, setTimer] = useState(0)
     const [isActive, setIsActive] = useState(false)
     const [isPaused, setIsPaused] = useState(false)
     const countRef = useRef(null)
     const [error, setError] = useState('')
-    const { currentUser, logout, bestTime, setBestTime} = useAuth()
+    const { currentUser, logout } = useAuth()
     const history = useHistory()
-
-    
-    // const writeUserData =()=> {
-    //     const db = database;
-    //     set(ref(db, 'users/' + currentUser.uid), {
-    //      email : currentUser.email,
-    //     });
-    //     set(ref(db, 'users/' + currentUser.uid + '/bestTime'), {
-    //        time: 0
-    //      })
-    //   }
-
-   
-
-    // const showBestTime = ()=>{
-    //     const db = database;
-    //    const saveBestTime = ref(db, 'users/' + currentUser.uid + '/bestTime' + '/time')
-    //    onValue(saveBestTime, (snapshot)=>{
-    //        const data = snapshot.val();
-    //        console.log(data)
-    //        console.log(bestTime)
-    //    })
-    //  }
-
-    // const writeUserTime =(e)=> {
-    //     e.preventDefault()
-    //     const db = database;
-    //     set(ref(db, 'users/' + currentUser.uid + '/bestTime'), {
-    //        time: bestTime
-    //      })
-    //   }
+    const [bestTime, setBestTime] = useState()
+    const [displayTime, setDisplayTime] = useState()
 
 
     const images = () => [
@@ -100,7 +72,7 @@ function Game() {
         element.classList.toggle('flip');
     }
 
-    
+
 
     const matchingCard = (e) => {
         const clickedCard = e.currentTarget
@@ -119,19 +91,12 @@ function Game() {
                 const cardSet = document.querySelectorAll('.makeInvisible')
                 if (cardSet.length === 24) {
                     handlePause(true)
-                    setRestartGame(!restartGame)
                     setBestTime(timer)
-                    
-                    if (timer < bestTime) {
-                        setBestTime(timer)
-                        
-                    }
-                    
-                  }
+                    setRestartGame(!restartGame)
+                }
             }
 
             else {
-
                 flippedCard.forEach(e => {
                     e.classList.remove('flipped')
                 })
@@ -178,13 +143,37 @@ function Game() {
         }
     }
 
+const saveTime = () => {
+        const db = database
 
+        if (displayTime === undefined) {
+            set(ref(db, 'users/' + currentUser.uid + '/bestTime'), {
+                time: bestTime
+            })
+        }
+
+        else if (timer < displayTime) {
+            set(ref(db, 'users/' + currentUser.uid + '/bestTime'), {
+                time: bestTime
+            })
+        }
+    }
+
+    const dbRef = ref(database);
+    get(child(dbRef, 'users/' + currentUser.uid + '/bestTime/time')).then((snapshot) => {
+        if (snapshot.exists()) {
+            setDisplayTime(snapshot.val());
+
+        } else {
+            console.log("No data available");
+        }
+    }).catch((error) => {
+        console.error(error);
+    });
 
     return (
-        
         <div className='game'>
-           
-             {startGame &&
+            {startGame &&
                 <div className='start-screen'>
                     <p className='game-rules'>Find the matching pairs as fast as you can!</p>
                     <h1 className='start-title'>Press</h1>
@@ -195,7 +184,7 @@ function Game() {
                 <div className='restart-screen'>
                     <h1>Well done!</h1>
                     <h1 className='restart-title'>Press</h1>
-                    <button className='restart-button' onClick={() => document.location.reload()}>Restart</button>
+                    <span onClick={saveTime()}><button className='restart-button' onClick={() => document.location.reload()}>Restart</button></span>
                 </div>
             }
             <section>
@@ -213,14 +202,16 @@ function Game() {
                     )}
             </section>
             <div className='bottom-container'>
-                <h1>Time: {formatTime()}</h1>
-                <h2>Best Time: {bestTime}s</h2>
-                <h3>{currentUser.email}{error}</h3>
-                <button onClick={handleLogout}>Log out</button>
-          
-                
+                <div className='time-container'>
+                <h1 className='current-time'>Time: {formatTime()}</h1>
+                <h2 className='best-time'>Best Time: {displayTime}s</h2>
+                </div>
+                <div className='user-container'>
+                <h1 className='current-user'>{currentUser.email}{error}</h1>
+                <button className='logout-button' onClick={handleLogout}>Log out</button>
+                </div>
             </div>
         </div>
-                );
+    );
 }
 export default Game;

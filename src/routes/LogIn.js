@@ -27,21 +27,23 @@ export default function Login() {
 
   return (
     <>
+    <div className='form-container'>
         <h1>{error}</h1>
-     <form onSubmit={handleSubmit}>
-            
-                <input className='contact-email' type="email" ref={emailRef} required placeholder='Your email' />
-             
-                <input className='password' type="password" ref={passwordRef} required placeholder='Your password' />
-                
-                <input className="send-button" type="submit" disabled={loading} value="Log in" />
-            </form>
-      <div>
-            <Link to="/Forgot-password">Forgot Password?</Link>
-          </div>
-      <div>
-        Need an account? <Link to="/">Sign Up</Link>
-      </div>
+          <form className='form' onSubmit={handleSubmit}>
+            <input className='email' type="email" ref={emailRef} required placeholder='Your email' />
+            <input className='password' type="password" ref={passwordRef} required placeholder='Your password' />
+            <input className="submit-button" type="submit" disabled={loading} value="Log in" />
+          </form>
+        <div>
+          <Link to="/Forgot-password">Forgot Password?</Link>
+        </div>
+        <div>
+          Need an account? <Link to="/">Sign Up</Link>
+        </div>
+        <div>
+         <Link to="/Leaderboard">LEADERBOARD</Link>
+        </div>
+        </div>
     </>
   )
 }

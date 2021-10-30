@@ -32,20 +32,18 @@ export default function Signup() {
 
   return (
     <>
+    <div className='form-container'>
       <h1>{error}</h1>
-     <form onSubmit={handleSubmit}>
-            
-                <input className='contact-email' type="email" ref={emailRef}  required placeholder='Your email' />
-             
+        <form className='form' onSubmit={handleSubmit}>
+                <input className='email' type="email" ref={emailRef}  required placeholder='Your email' />
                 <input className='password' type="password" ref={passwordRef}  required placeholder='Your password' />
                 <input className='password' type="password" ref={passwordConfirmRef} required placeholder='Your password' />
-                
-                <input className="send-button" type="submit" disabled={loading} value="Sign In" />
-            </form>
-      <div></div>
+                <input className="submit-button" type="submit" disabled={loading} value="Sign In" />
+        </form>
       <div>
         Already have an account? <Link to="/LogIn">Log In</Link>
       </div>
+    </div>
     </>
   )
 }
