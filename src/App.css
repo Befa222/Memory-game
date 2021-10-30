@@ -48,9 +48,9 @@
   flex-direction: column;
   top: 30%;
   left: 50%;
-  width: 80%;
+  width: 90%;
   height: 25vh;
-  background-color: rgb(255, 224, 49);
+  backdrop-filter: blur(10px);
   border: 5px solid black;
   border-radius: 2em;
   transform: translate(-50%, -50% );
@@ -74,13 +74,13 @@
   flex-direction: column;
   top: 30%;
   left: 50%;
-  width: 60%;
+  width: 90%;
   height: 25vh;
-  background-color: rgb(255, 217, 0);
   border: 5px solid black;
   border-radius: 2em;
   transform: translate(-50%, -50% );
   z-index: 5;
+  backdrop-filter: blur(10px)
 }
 .start-button {
 font-size: 1.5rem;
@@ -192,6 +192,7 @@ section {
   background-color: transparent;
   border: 5px solid black;
   border-radius: 2em;
+  backdrop-filter: blur(10px)
 }
 .time-container, .user-container{
   display: flex;

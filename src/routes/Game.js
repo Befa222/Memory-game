@@ -208,7 +208,7 @@ const saveTime = () => {
                 </div>
                 <div className='user-container'>
                 <h1 className='current-user'>{currentUser.email}{error}</h1>
-                <button className='logout-button' onClick={handleLogout}>Log out</button>
+                <button className='logout-button' onClick={ handleLogout}>Log out</button>
                 </div>
             </div>
         </div>
