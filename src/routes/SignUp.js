@@ -41,7 +41,7 @@ export default function Signup() {
                 <input className="submit-button" type="submit" disabled={loading} value="Sign In" />
         </form>
       <div>
-        Already have an account? <Link to="/LogIn">Log In</Link>
+        Already have an account? <Link to="/">Log In</Link>
       </div>
     </div>
     </>

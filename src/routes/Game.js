@@ -137,7 +137,7 @@ function Game() {
 
         try {
             await logout()
-            history.push('/LogIn')
+            history.push('/')
         } catch {
             setError('Failed to log out')
         }
@@ -177,14 +177,14 @@ const saveTime = () => {
                 <div className='start-screen'>
                     <p className='game-rules'>Find the matching pairs as fast as you can!</p>
                     <h1 className='start-title'>Press</h1>
-                    <span onClick={() => handleStart()}><button className='start-button' onClick={() => { shuffle(); setStartGame(!startGame) }}>Start</button></span>
+                    <span onClick={() => handleStart()}><button className='start-button' onClick={() => { shuffle(); setStartGame(!startGame) }}>START</button></span>
                 </div>
             }
             {restartGame &&
                 <div className='restart-screen'>
                     <h1>Well done!</h1>
                     <h1 className='restart-title'>Press</h1>
-                    <span onClick={saveTime()}><button className='restart-button' onClick={() => document.location.reload()}>Restart</button></span>
+                    <span onClick={saveTime()}><button className='restart-button' onClick={() => document.location.reload()}>RESTART</button></span>
                 </div>
             }
             <section>

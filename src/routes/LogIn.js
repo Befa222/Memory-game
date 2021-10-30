@@ -38,7 +38,7 @@ export default function Login() {
           <Link to="/Forgot-password">Forgot Password?</Link>
         </div>
         <div>
-          Need an account? <Link to="/">Sign Up</Link>
+          Need an account? <Link to="/Sign-up">Sign Up</Link>
         </div>
         <div>
          <Link to="/Leaderboard">LEADERBOARD</Link>
