@@ -1,34 +1,52 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { ref, child, get } from '@firebase/database';
 import { database } from '../firebase';
 import { Link } from 'react-router-dom';
 
-
-
 export default function Leaderboard() {
 
-    //const [allTimes, setAllTimes] = useState()
+    const [allTimes, setAllTimes] = useState([])
 
+    useEffect(() => {
+        function printTimes() {
+            const allT = []
+            const dbRef = ref(database);
+            get(child(dbRef, 'users/')).then((snapshot) => {
+                if (snapshot.exists()) {
+                    snapshot.forEach(e => {
+                        const data = (e.val())
+                        console.log(data)
+                        const times = data['bestTime']
+                        console.log(times)
+                        allT.push(times)
+                        console.log(allT)
+                        allT.sort((a, b) => a.time - b.time)
+                        const showall = [...allTimes, ...allT];
+                        setAllTimes(showall)
+                    })
 
-    const data = []
-    const dbRef = ref(database);
-    get(child(dbRef, '/users')).then((snapshot) => {
-        if (snapshot.exists()) {
-            data.push(snapshot.val());
-            console.log(data)
-           
-        } else {
-            console.log("No data available");
+                } else {
+                    console.log("No data available");
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
         }
-    }).catch((error) => {
-        console.error(error);
-    });
+        printTimes()
 
+    }, [])
 
     return (
         <div>
+
             <h1>LEADERBOARD</h1>
-         <button>test</button>
+            {allTimes &&
+                allTimes.map((e, index) =>
+                    <ul key={index}>
+                        <li>{e.email}: {e.time}s</li>
+                    </ul>
+                )
+            }
             <Link to='/'>Log in</Link>
         </div>
     )

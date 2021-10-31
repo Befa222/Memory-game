@@ -148,7 +148,8 @@ const saveTime = () => {
 
         if (displayTime === undefined) {
             set(ref(db, 'users/' + currentUser.uid + '/bestTime'), {
-                time: bestTime
+                time: bestTime,
+                email: currentUser.email
             })
         }
 
