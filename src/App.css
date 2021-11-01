@@ -14,6 +14,7 @@
   backdrop-filter: blur(10px);
   padding-left: 2vw;
   padding-right: 2vw;
+  font-size: 4vw;
 
 }
 .form{
@@ -220,4 +221,90 @@ section {
   padding: 0.2em 0.5em 0.2em 0.5em;
   margin-top: .5vh;
   font-family: CarterOne;
+}
+.leaderboard{
+  position: relative;
+  width:80%;
+  top: 3vh;
+  left:10%;
+  font-size: 8vw;
+  text-align: center;
+  border: 4px solid black;
+  border-radius: 2em;
+  backdrop-filter: blur(10px);
+  
+}
+ul{
+  list-style: none;
+  padding: 0;
+}
+.leaderboard-container{
+  overflow-y: scroll;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+  top:5vh;
+  left:10%;
+  width:80%;
+  height: 60vh;
+  font-size: 5vw;
+  border:4px solid black;
+  border-radius: 2em;
+  backdrop-filter: blur(10px);
+
+}
+.login-container{
+  position: absolute;
+  top: 75vh;
+  width: 20%;
+  left:40%;
+  text-align: center;
+  font-size: 5vw;
+
+}
+@media all and (orientation: landscape){
+  .form-container{
+    font-size: 2vw;
+    height: 80vh;
+  }
+  .email, .password{
+    font-size: 2vw;
+  }
+  .submit-button{
+    font-size: 2vw;
+  }
+  .leaderboard{
+    font-size: 3vw;
+  }
+  .leaderboard-container{
+    font-size: 3vw;
+  }
+  .login-container{
+    font-size: 3vw
+  }
+  .game-rules{
+    font-size: 2vw;
+  }
+  .start-title, .restart-title{
+    font-size: 3vw;
+  }
+  .start-button, .restart-button{
+    font-size: 2vw;
+  }
+  .current-time{
+    font-size: 2vw;
+  }
+  .best-time{
+    font-size: 2vw;
+  }
+  .current-user{
+    font-size: 2vw;
+  }
+  .logout-button{
+    font-size: 1.5vw;
+  }
+  .cardImage{
+    width: 35%;
+  }
 }

@@ -17,6 +17,12 @@ body {
     background-size: cover;
     font-family: CarterOne;
 }
+@media all and (orientation: landscape){
+    body{
+        background-image: url('/src/images/gameLandscapeBg.jpg');
+    
+    }
+}
 @font-face {
     font-family: CarterOne;
     src: url('./fonts/CarterOne-Regular.ttf');

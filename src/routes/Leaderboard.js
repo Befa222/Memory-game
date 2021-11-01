@@ -8,19 +8,17 @@ export default function Leaderboard() {
     const [allTimes, setAllTimes] = useState([])
 
     useEffect(() => {
+
         function printTimes() {
+
             const allT = []
             const dbRef = ref(database);
             get(child(dbRef, 'users/')).then((snapshot) => {
                 if (snapshot.exists()) {
                     snapshot.forEach(e => {
                         const data = (e.val())
-                        console.log(data)
                         const times = data['bestTime']
-                        console.log(times)
                         allT.push(times)
-                        console.log(allT)
-                        allT.sort((a, b) => a.time - b.time)
                         const showall = [...allTimes, ...allT];
                         setAllTimes(showall)
                     })
@@ -32,22 +30,26 @@ export default function Leaderboard() {
                 console.error(error);
             });
         }
-        printTimes()
-
+        return printTimes();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
-        <div>
+        <>
+            <h1 className='leaderboard'>LEADERBOARD</h1>
+            <div className='leaderboard-container' >
+                <ol>
+                    {allTimes &&
+                        allTimes.sort((a, b) => a.time - b.time).map((e, index) =>
+                            <li key={index}>{e.email}: {e.time}s</li>
+                        )
+                    }
+                </ol>
+            </div>
+            <div className='login-container'>
+                <Link to='/'>Log in</Link>
+            </div>
 
-            <h1>LEADERBOARD</h1>
-            {allTimes &&
-                allTimes.map((e, index) =>
-                    <ul key={index}>
-                        <li>{e.email}: {e.time}s</li>
-                    </ul>
-                )
-            }
-            <Link to='/'>Log in</Link>
-        </div>
+        </>
     )
 }

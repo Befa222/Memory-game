@@ -10,7 +10,7 @@ export default function ForgotPassword() {
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const [message, setMessage] = useState('')
-    
+
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -20,8 +20,8 @@ export default function ForgotPassword() {
             setError('')
             setLoading(true)
             await resetPassword(emailRef.current.value)
-           setMessage('Check your email for instructions')
-        } catch{
+            setMessage('Check your email for instructions')
+        } catch {
             setError('failed to reset password')
         }
 
@@ -29,17 +29,16 @@ export default function ForgotPassword() {
     }
 
     return (
-        <div>
-            <h2>{error}</h2>
-            <h2>{message}</h2>
-            <form onSubmit={handleSubmit}>
-               
-                <input className='user-email' type="email" ref={emailRef} required placeholder='Your email' />
-               
-                <input className="reset-password" type="submit" disabled={loading} value="Reset password" />
-            </form>
-            
-            <Link to='/LogIn'>Log in</Link>
-        </div>
+        <>
+            <div className='form-container'>
+                <h2>{error}</h2>
+                <h2>{message}</h2>
+                <form className='form' onSubmit={handleSubmit}>
+                    <input className='email' type="email" ref={emailRef} required placeholder='Your email' />
+                    <input className="submit-button" type="submit" disabled={loading} value="Reset password" />
+                </form>
+                <Link to='/'>Log in</Link>
+            </div>
+        </>
     )
 }
