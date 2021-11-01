@@ -43,9 +43,9 @@ export default function ForgotPassword() {
             <div className='form-container'>
                 <h2>{error}</h2>
                 <h2>{message}</h2>
-                <form className='form' onSubmit={handleSubmit} onFocus={virtualKeyboardTrue}>
-                    <input className='email' type="email" ref={emailRef} required placeholder='Your email' />
-                    <input className="submit-button" type="submit" disabled={loading} value="Reset password" />
+                <form className='form' onSubmit={handleSubmit}>
+                    <input onFocus={virtualKeyboardTrue} className='email' type="email" ref={emailRef} required placeholder='Your email' />
+                    <input onFocus={virtualKeyboardTrue} className="submit-button" type="submit" disabled={loading} value="Reset password" />
                 </form>
              <span onFocus={virtualKeyboardFalse}><Link to='/'>Log in</Link></span>
             </div>
