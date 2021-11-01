@@ -3,6 +3,19 @@ import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 
 export default function Signup() {
+
+  function virtualKeyboardTrue() {
+    let viewport = document.querySelector("meta[name=viewport]");
+    viewport.setAttribute("content", viewport.content + ", height=" + window.innerHeight)
+}
+
+  function virtualKeyboardFalse() {
+let viewport = document.querySelector("meta[name=viewport]");
+   viewport.setAttribute('content', viewport.content = "width=device-width, initial-scale=1, user-scalable=0" )
+}
+
+
+
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
@@ -34,13 +47,13 @@ export default function Signup() {
     <>
     <div className='form-container'>
       <h1>{error}</h1>
-        <form className='form' onSubmit={handleSubmit}>
+        <form className='form' onSubmit={handleSubmit} onFocus={virtualKeyboardTrue}>
                 <input className='email' type="email" ref={emailRef}  required placeholder='Your email' />
                 <input className='password' type="password" ref={passwordRef}  required placeholder='Your password' />
                 <input className='password' type="password" ref={passwordConfirmRef} required placeholder='Your password' />
                 <input className="submit-button" type="submit" disabled={loading} value="Sign In" />
         </form>
-      <div>
+      <div onFocus={virtualKeyboardFalse}>
         Already have an account? <Link to="/">Log In</Link>
       </div>
     </div>

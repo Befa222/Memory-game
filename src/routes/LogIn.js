@@ -3,6 +3,15 @@ import { useAuth } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
 
 export default function Login() {
+  function virtualKeyboardTrue() {
+    let viewport = document.querySelector("meta[name=viewport]");
+    viewport.setAttribute("content", viewport.content + ", height=" + window.innerHeight)
+}
+
+  function virtualKeyboardFalse() {
+let viewport = document.querySelector("meta[name=viewport]");
+   viewport.setAttribute('content', viewport.content = "width=device-width, initial-scale=1, user-scalable=0" )
+}
   const emailRef = useRef()
   const passwordRef = useRef()
   const { login } = useAuth()
@@ -29,18 +38,18 @@ export default function Login() {
     <>
     <div className='form-container'>
         <h1>{error}</h1>
-          <form className='form' onSubmit={handleSubmit}>
+          <form className='form' onSubmit={handleSubmit} onFocus={virtualKeyboardTrue}>
             <input className='email' type="email" ref={emailRef} required placeholder='Your email' />
             <input className='password' type="password" ref={passwordRef} required placeholder='Your password' />
             <input className="submit-button" type="submit" disabled={loading} value="Log in" />
           </form>
-        <div>
+        <div onFocus={virtualKeyboardFalse}>
           <Link to="/Forgot-password">Forgot Password?</Link>
         </div>
-        <div>
+        <div onFocus={virtualKeyboardFalse}>
           Need an account? <Link to="/Sign-up">Sign Up</Link>
         </div>
-        <div>
+        <div onFocus={virtualKeyboardFalse}>
          <Link to="/Leaderboard">LEADERBOARD</Link>
         </div>
         </div>

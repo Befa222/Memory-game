@@ -5,6 +5,16 @@ import { useAuth } from '../contexts/AuthContext'
 
 export default function ForgotPassword() {
 
+    function virtualKeyboardTrue() {
+        let viewport = document.querySelector("meta[name=viewport]");
+        viewport.setAttribute("content", viewport.content + ", height=" + window.innerHeight)
+    }
+    
+      function virtualKeyboardFalse() {
+    let viewport = document.querySelector("meta[name=viewport]");
+       viewport.setAttribute('content', viewport.content = "width=device-width, initial-scale=1, user-scalable=0" )
+    }
+
     const emailRef = useRef()
     const { resetPassword } = useAuth()
     const [error, setError] = useState('')
@@ -33,11 +43,11 @@ export default function ForgotPassword() {
             <div className='form-container'>
                 <h2>{error}</h2>
                 <h2>{message}</h2>
-                <form className='form' onSubmit={handleSubmit}>
+                <form className='form' onSubmit={handleSubmit} onFocus={virtualKeyboardTrue}>
                     <input className='email' type="email" ref={emailRef} required placeholder='Your email' />
                     <input className="submit-button" type="submit" disabled={loading} value="Reset password" />
                 </form>
-                <Link to='/'>Log in</Link>
+             <span onFocus={virtualKeyboardFalse}><Link to='/'>Log in</Link></span>
             </div>
         </>
     )

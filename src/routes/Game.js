@@ -18,6 +18,10 @@ import poke11 from '../images/93.png'
 import poke12 from '../images/94.png'
 
 function Game() {
+    function virtualKeyboardFalse() {
+        let viewport = document.querySelector("meta[name=viewport]");
+           viewport.setAttribute('content', viewport.content = "width=device-width, initial-scale=1, user-scalable=0" )
+        }
 
     const [startGame, setStartGame] = useState(true)
     const [randomImages, setRandomImages] = useState()
@@ -173,7 +177,7 @@ const saveTime = () => {
     });
 
     return (
-        <div className='game'>
+        <div className='game' onLoad={virtualKeyboardFalse}>
             {startGame &&
                 <div className='start-screen'>
                     <p className='game-rules'>Find the matching pairs as fast as you can!</p>
