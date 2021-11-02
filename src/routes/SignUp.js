@@ -47,11 +47,11 @@ let viewport = document.querySelector("meta[name=viewport]");
     <>
     <div className='form-container'>
       <h1>{error}</h1>
-        <form className='form' onSubmit={handleSubmit} onInput={virtualKeyboardTrue}>
-                <input  className='email' type="email" ref={emailRef}  required placeholder='Your email' />
-                <input  className='password' type="password" ref={passwordRef}  required placeholder='Your password' />
-                <input  className='password' type="password" ref={passwordConfirmRef} required placeholder='Your password' />
-                <input  className="submit-button" type="submit" disabled={loading} value="Sign In" />
+        <form className='form' onSubmit={handleSubmit} >
+                <input onChange={virtualKeyboardTrue}  className='email' type="email" ref={emailRef}  required placeholder='Your email' />
+                <input onChange={virtualKeyboardTrue}  className='password' type="password" ref={passwordRef}  required placeholder='Your password' />
+                <input onChange={virtualKeyboardTrue}  className='password' type="password" ref={passwordConfirmRef} required placeholder='Your password' />
+                <input onChange={virtualKeyboardTrue}  className="submit-button" type="submit" disabled={loading} value="Sign In" />
         </form>
       <div onFocus={virtualKeyboardFalse}>
         Already have an account? <Link to="/">Log In</Link>
