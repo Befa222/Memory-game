@@ -45,9 +45,9 @@ let viewport = document.querySelector("meta[name=viewport]");
 
   return (
     <>
-    <div className='form-container'>
+    <div className='form-container' onLoad={virtualKeyboardTrue}>
       <h1>{error}</h1>
-        <form className='form' onSubmit={handleSubmit} onLoad={virtualKeyboardTrue}>
+        <form className='form' onSubmit={handleSubmit} >
                 <input className='email' type="email" ref={emailRef}  required placeholder='Your email' />
                 <input className='password' type="password" ref={passwordRef}  required placeholder='Your password' />
                 <input className='password' type="password" ref={passwordConfirmRef} required placeholder='Your password' />
