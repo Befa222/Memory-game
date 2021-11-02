@@ -5,15 +5,15 @@ import { useAuth } from '../contexts/AuthContext'
 
 export default function ForgotPassword() {
 
-    function virtualKeyboardTrue() {
-        let viewport = document.querySelector("meta[name=viewport]");
-        viewport.setAttribute("content", viewport.content + ", height=" + window.innerHeight)
-    }
+    // function virtualKeyboardTrue() {
+    //     let viewport = document.querySelector("meta[name=viewport]");
+    //     viewport.setAttribute("content", viewport.content + ", height=" + window.innerHeight)
+    // }
     
-      function virtualKeyboardFalse() {
-    let viewport = document.querySelector("meta[name=viewport]");
-       viewport.setAttribute('content', viewport.content = "width=device-width, initial-scale=1, user-scalable=0" )
-    }
+    //   function virtualKeyboardFalse() {
+    // let viewport = document.querySelector("meta[name=viewport]");
+    //    viewport.setAttribute('content', viewport.content = "width=device-width, initial-scale=1, user-scalable=0" )
+    // }
 
     const emailRef = useRef()
     const { resetPassword } = useAuth()
